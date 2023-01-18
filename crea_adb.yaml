@@ -14,7 +14,7 @@
               display_name: "{{ display_name }}"
               admin_password: "{{ admin_password }}"
               db_name: "{{ db_name }}"
-              data_storage_size_in_tbs: "{{ data_storage_size_in_tbs }}"
+              data_storage_size_in_gbs: "{{ data_storage_size_in_gbs }}"
               is_free_tier: true
               state: 'present'
           register: resultado
