@@ -1,0 +1,38 @@
+- name: Detiene Instancia Autonomous Database
+  hosts: localhost
+  connection: local
+
+  vars_files: vault.yaml
+
+
+  tasks:
+    - block:
+        - name: Lista Todas las Instancias de ADB
+          oracle.oci.oci_database_autonomous_database_facts:
+             compartment_id: "{{ compartment_ocid }}"
+             display_name: "{{ display_name }}"
+          register: resultado
+
+        - name: Valida si Existe Nueva Instancia
+          assert:
+             that:
+                - resultado.autonomous_databases[0].display_name == display_name
+
+        - set_fact:
+             autonomous_database_id: "{{ resultado.autonomous_databases[0].id }}"
+
+        - name: Elimina ADB
+          oracle.oci.oci_database_autonomous_database:
+             autonomous_database_id: "{{ autonomous_database_id }}"
+             action: 'absent'
+          register: result
+
+        - name: Valida que la Instancia se Elimino
+          assert:
+             that:
+               - result.changed == True
+               - result.autonomous_database.display_name == display_name
+      rescue:
+
+        - fail:
+            msg: "ERROR, No se logro Eliminar Instancia ADB."
