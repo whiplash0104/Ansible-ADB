@@ -24,7 +24,7 @@
         - name: Elimina ADB
           oracle.oci.oci_database_autonomous_database:
              autonomous_database_id: "{{ autonomous_database_id }}"
-             action: 'absent'
+             state: 'absent'
           register: result
 
         - name: Valida que la Instancia se Elimino
