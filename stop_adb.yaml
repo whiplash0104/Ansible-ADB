@@ -18,14 +18,15 @@
              that:
                 - resultado.autonomous_databases[0].display_name == display_name
 
-        - set_fact:
-             autonomous_database_id: "{{ resultado.autonomous_database.id }}"
+#        - set_fact:
+#             autonomous_database_id: "{{ resultado.autonomous_databases.id }}"
 
-#        - name: Detiene ADB
-#          oracle.oci.oci_database_autonomous_database_actions:
+        - name: Detiene ADB
+          oracle.oci.oci_database_autonomous_database_actions:
 #             autonomous_database_id: "{{ autonomous_database_id }}"
-#             action: 'stop'
-#          register: result
+             display_name:  "{{ display_name }}"
+             action: 'stop'
+          register: result
 
         - name: Assert that specified Autonomous Database is stopped
           assert:
