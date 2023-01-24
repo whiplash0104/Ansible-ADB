@@ -14,7 +14,7 @@
               display_name: "{{ display_name }}"
               admin_password: "{{ admin_password }}"
               db_name: "{{ db_name }}"
-              data_storage_size_in_gbs: "{{ data_storage_size_in_gbs }}"
+              data_storage_size_in_tbs: "{{ data_storage_size_in_tbs }}"
               is_free_tier: true
               state: 'present'
           register: resultado
@@ -24,7 +24,7 @@
 
         - assert:
             that:
-              - result.autonomous_database.lifecycle_state == "AVAILABLE"
+              - resultado.autonomous_database.lifecycle_state == "AVAILABLE"
 
         - name: Lista Todas las Instancias de ADB
           oracle.oci.oci_database_autonomous_database_facts:
