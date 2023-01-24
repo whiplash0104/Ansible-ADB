@@ -1,4 +1,4 @@
-- name: Crea Instancia Autonomous Database Allways Free 
+- name: Inicia Instancia Autonomous Database 
   hosts: localhost
   connection: local
 
@@ -13,7 +13,7 @@
              display_name: "{{ display_name }}"
           register: resultado
 
-        - name: Valida si Existe Nueva Instancia
+        - name: Valida si Existe Instancia
           assert:
              that:
                 - resultado.autonomous_databases[0].display_name == display_name
@@ -21,16 +21,16 @@
         - set_fact:
              autonomous_database_id: "{{ resultado.autonomous_databases[0].id }}"
 
-        - name: Detiene ADB
+        - name: Inicia ADB
           oracle.oci.oci_database_autonomous_database_actions:
              autonomous_database_id: "{{ autonomous_database_id }}"
              action: 'start'
           register: result
 
-        - name: Assert that specified Autonomous Database is stopped
+        - name: Valida que la Instancia Inicio
           assert:
              that:
       rescue:
 
         - fail:
-            msg: "ERROR, No se logro Detener Instancia ADB."
+            msg: "ERROR, No se Logro Iniciar Instancia ADB."

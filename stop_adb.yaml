@@ -1,4 +1,4 @@
-- name: Crea Instancia Autonomous Database Allways Free 
+- name: Detiene Instancia Autonomous Database
   hosts: localhost
   connection: local
 
@@ -27,7 +27,7 @@
              action: 'stop'
           register: result
 
-        - name: Assert that specified Autonomous Database is stopped
+        - name: Valida que la Instancia se Detuvo
           assert:
              that:
       rescue:
