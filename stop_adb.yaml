@@ -19,7 +19,7 @@
                 - resultado.autonomous_databases[0].display_name == display_name
 
         - set_fact:
-             autonomous_database_id: "{{ resultado.autonomous_databases.id }}"
+             autonomous_database_id: "{{ resultado.autonomous_databases[0].id }}"
 
         - name: Detiene ADB
           oracle.oci.oci_database_autonomous_database_actions:
